@@ -1,0 +1,130 @@
+* {
+    font-family: 'DotGothic16', sans-serif;
+    border-radius: 15px;
+    /*border: red solid 1px;*/
+}
+
+body {
+    background-color: darkslategrey;
+}
+
+header {
+    height: 10vh;
+    display: flexbox;
+    background-color: aquamarine;
+    text-align: center;
+    text-shadow: 1px 2px white;
+    justify-content: center;
+    font-size: 10vh;
+    font-weight: bolder;
+    padding: 2vh;
+    line-height: 100%;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+#pet-container {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    margin: auto;
+    padding: 2vh;
+    padding-bottom: 0px;
+    size: 100%;
+    border-bottom-left-radius: 0px ;
+}
+
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+.healthbar {
+    background-color: red;
+    height: 2vh;
+    padding-top: 0px;
+    margin-left:25%;
+    width: 26%;
+}
+
+/*////////// FEED CLEAN PLAY BUTTONS   //////////*/
+#button-container {
+    display: flex;
+    justify-content: space-evenly;
+    width: 50%;
+    margin: auto;
+    font-size: 8vh;
+    padding: 2vh;
+}
+
+.clickyButton button {
+    background-color: blueviolet;
+    color: antiquewhite;
+    border: 2px solid antiquewhite;
+    margin: 1vh;
+    width: 25vh;
+    text-align: center;
+    padding: 1vh;
+    font-size: 8vh;
+    box-shadow: 0.5vh 0.5vh;
+}
+
+.clickyButton button:hover {
+    background-color: antiquewhite;
+    color: blueviolet;
+    border: 2px solid blueviolet;
+    box-shadow: 0.25vh 0.25vh;
+}
+/*////////// FEED CLEAN PLAY BUTTONS   //////////*/
+
+/*////////// SELECT PET BUTTONS   //////////*/
+#choosePetGrid button:hover {
+    background-color: antiquewhite;
+    color: blueviolet;
+    border: 4px solid blueviolet;
+
+}
+/*////////// SELECT PET BUTTONS   //////////*/
+
+#choosePetGrid {
+    margin:auto;
+    display: grid;
+    display: flexbox;
+    height: 70vh;
+    width: 90%;
+    margin: auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 90%;
+    gap: 2vh;
+    justify-items: center;
+    justify-content: center;
+    align-content: center;
+}
+
+#nameInputter {
+    margin: auto;
+    display:flex;
+    justify-content: center;
+}
+
+input {
+    font-size: 8vh;
+    max-width: 30%;
+    height: auto;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+
+#rick {
+    width: 50%;
+    margin: auto;
+
+}
