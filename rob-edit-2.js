@@ -42,11 +42,6 @@ class Cyberpet {
     this.name = name,
     this.type = type, // PetType object: so far croc, bunny, dog or cat
 
-    // These get set when the user calls a play/clean/feed function
-    this.play = true,
-    this.feed = true,
-    this.clean = true,
-
     // mood gets calculated by status functions, and also gets referenced/queried by status functions
     // some status functions might bite the user, depending on result, to add a bit of a risk factor
     this.mood = new Mood(50, 50, 50, 50, 50), 
@@ -64,7 +59,7 @@ class Cyberpet {
     // use this.score to reference Cyberpet.scorevar
     //
     get score() {
-        // Do funcky stuff here
+        // Do funky stuff here
         return this.scorevar;
     }
     set score(tmpvar) {
@@ -76,9 +71,9 @@ class Cyberpet {
     // ACTION FUNCTIONS:
     //
 
-    //changes feed false to true, adds 10 health-capped at 100 /// may modify for dog/not dog
+    //changes feed false to true, adds 10 health-capped at 100
     feedPet () {
-        this.feed = true;
+        //this.feed = true;
         this.mood.hungry -= 2 * this.type.greedy;
         this.mood.tired -= 2 * this.type.lazy;
         this.mood.angry -= 100;
@@ -86,16 +81,19 @@ class Cyberpet {
         this.mood.angry = this.mood.hungry + this.mood.bored + this.mood.tired + this.mood.dirty;
         this.mood.angry *= Math.floor(this.type.irritable/3)+1;
 
-        this.health += 10;
+        this.health += 10 - Math.floor(this.mood.tired / 10);
         if (this.health > 100) {
             this.health -= 20;
             console.log(`${this.name} is being overfed and getting overweight!`);
         }
+
+        setReadouts();
+
     }
 
-    //changes clean false to true, adds 10 health-capped at 100 /// may modify for dog/not dog
+    //changes clean false to true, adds 10 health-capped at 100
     cleanPet () {
-        this.clean = true;
+        //this.clean = true;
         this.mood.dirty -= 2 * this.type.scruffy;
         this.mood.tired += 3 * this.type.lazy;
 
@@ -108,16 +106,19 @@ class Cyberpet {
             console.log(`Maybe you should feed him?`);
         }
 
-        if (this.health < 90) this.health += 10;
-        else { 
+        this.health += 10 - Math.floor(this.mood.tired / 10);
+        if (this.health > 100) { 
             this.health = 100;
             console.log(`${this.name} is now really, really clean, and in perfect health!`);
         }
+
+        setReadouts();
+        
     }    
 
     //changes play false to true, adds 10 health-capped at 100 /// may modify for dog/not dog
     playWithPet () {
-        this.play = true;
+        //this.play = true;
         this.mood.bored -= 2 * this.type.affectionate;
         this.mood.tired += 3 * this.type.lazy;
 
@@ -130,11 +131,14 @@ class Cyberpet {
             console.log(`Maybe play with him later?`);
         }
 
-        if (this.health < 90) this.health += 10;
-        else {
+        this.health += 10 - Math.floor(this.mood.tired / 10);
+        if (this.health > 100) { 
             this.health = 100;
             console.log(`${this.name} is so healthy he doen't really need any more play, but what the heck.`)
         }
+
+        setReadouts();
+       
     }
 
     //
@@ -162,6 +166,9 @@ class Cyberpet {
             else if (this.health < 15) this.petImage = petImages[2];
             else if (this.health < 1) this.petImage = petImages[3];
             else this.petImage = petImages[petImages.length];
+                   
+            setReadouts();
+            
             }, 5000);
     }
 
@@ -172,6 +179,24 @@ class Cyberpet {
 
 }
 
+
+/*  COPIED HERE FROM .HTML FILE FOR REFERENCE:
+            <div id="hungry-readout">hungry: 50</div>
+            <div id="clean-readout">dirty: 50</div>
+            <div id="bored-readout">bored: 50</div>
+            <div id="tired-readout">tired: 50</div>
+            <div id="angry-readout">angry: 50</div>
+*/
+
+
+function setReadouts() {
+    //console.log("Setting Readouts");
+    document.getElementById("hungry-readout").textContent = `Hungry: ${myPet.mood.hungry}`;
+    document.getElementById("clean-readout").textContent = `Clean: ${myPet.mood.clean}`;
+    document.getElementById("bored-readout").textContent = `Bored: ${myPet.mood.bored}`;
+    document.getElementById("tired-readout").textContent = `Tired: ${myPet.mood.tired}`;
+    document.getElementById("angry-readout").textContent = `Angry: ${myPet.mood.angry}`;
+}
 
 
 ///////// hiding name-input, game space ///////////////
@@ -265,7 +290,6 @@ feedClick.addEventListener("mousedown", () => {
     //console.log("feed test");
 });
 feedClick.addEventListener("mouseup", () => {
-    myPet.feedPet();
     document.getElementById("pet-image").src = "pics/dog-happy_q50.webp"
     //console.log("feed test");
 });
@@ -277,7 +301,6 @@ cleanClick.addEventListener("mousedown", () => {
     //console.log("clean test");
 });
 cleanClick.addEventListener("mouseup", () => {
-    myPet.cleanPet();
     document.getElementById("pet-image").src = "pics/dog-happy_q50.webp"
     //console.log("clean test");
 });
@@ -290,7 +313,6 @@ playClick.addEventListener("mousedown", () => {
     //console.log("play test");
 });
 playClick.addEventListener("mouseup", () => {
-    myPet.playWithPet();
     document.getElementById("pet-image").src = "pics/dog-happy_q50.webp"
     //console.log("play test");
 });
