@@ -1,5 +1,16 @@
+// Define images for each type of pet
+let crocImages = ["pics/croc-happy.jpg","pics/croc-unhappy.jpg","pics/croc-lastlegs.jpg","pics/croc-dead.jpg"];
+let bunnyImages = ["pics/bunny-happy.jpg","pics/bunny-unhappy.jpg","pics/bunny-lastlegs.jpg","pics/bunny-dead.jpg"];
+let dogImages = ["pics/dog-happy.jpg","pics/dog-unhappy.jpg","pics/dog-lastlegs.jpg","pics/dog-dead.jpg"];
+let catImages = ["pics/cat-happy.jpg","pics/cat-unhappy.jpg","pics/cat-lastlegs.jpg","pics/cat-dead.jpg"];
+
+//console.log(dogImages);
+
+// Class for defining the type of pet, with a characteristic temperament
 class PetType {
-    constructor (species, affectionate, irritable, lazy, scruffy, greedy) {
+    constructor (species, affectionate, irritable, lazy, scruffy, greedy, images) {
+        //console.log(`Constructing a ${species}`);
+        
         // This is a string
         this.species = species;
         // All these are simple numbers between 1 and 10
@@ -9,15 +20,26 @@ class PetType {
         this.lazy = lazy;
         this.scruffy = scruffy;
         this.greedy = greedy;
+        // An array of images, reflecting four different moods
+        this.pics = images;
     }
 }
 
-// Define some types of pets, complete with temperaments, as global variables.
-let croc = new PetType("crocodile", 1,10,7,5,8);
-let bunny = new PetType("woodland bunny", 10,1,2,8,10);
-let dog = new PetType("dog", 8,3,2,9,7);
-let cat = new PetType("cat", 6,8,8,2,8);
+//console.log("Defined constructor for PetType");
 
+// Define some types of pets, complete with temperaments, as global variables.
+let croc = new PetType("crocodile", 1,10,7,5,8, crocImages);
+//console.log("Defined croc");
+let bunny = new PetType("woodland bunny", 10,1,2,8,10, bunnyImages);
+//console.log("Defined bunny");
+let dog = new PetType("dog", 8,3,2,9,7, dogImages);
+//console.log("Defined dog");
+let cat = new PetType("cat", 6,8,8,2,8, catImages);
+//console.log("Defined cat");
+
+//console.log("Defined some pet types");
+
+// Use this class to keep track of the mood of the pet
 class Mood {
     constructor (hungry, bored, dirty, angry, tired){
         // All these are simple numbers between 1 and 100
@@ -33,12 +55,12 @@ class Mood {
     }
 }
 
-// Global array of default pet images.
-// When you choose a pet type, you need to update this array, else you'll just get the default.
-let petImages = ["happy.jpg","unhappy.jpg","lastlegs.jpg","dead.jpg"];
 
 class Cyberpet {
     constructor (name, type) {
+        
+    console.log(`Constructing a ${type.species} called ${name}`);
+        
     this.name = name,
     this.type = type, // PetType object: so far croc, bunny, dog or cat
 
@@ -50,8 +72,11 @@ class Cyberpet {
     // Only needs to be a simple number
     this.health = 100 // This could be made into a virtual attribute, I think.
     this.scorevar = 0; // Use getter and setter methods for this var.
+
+    this.pic = type.pics[0]; // This is always the correct pic to show. Start off happy.
     
-    this.petImage = petImages[0];
+    console.log(`Construction complete! The pic is ${this.pic}`);
+    
     }
 
     //
@@ -161,11 +186,11 @@ class Cyberpet {
             this.health -=10;
             this.score += this.health;
             
-            if (this.health < 80) this.petImage = petImages[0];
-            else if (this.health < 50) this.petImage = petImages[1];
-            else if (this.health < 15) this.petImage = petImages[2];
-            else if (this.health < 1) this.petImage = petImages[3];
-            else this.petImage = petImages[petImages.length];
+            if (this.health < 80) this.pic = this.type.pics[0];
+            else if (this.health < 50) this.pic = this.type.pics[1];
+            else if (this.health < 15) this.pic = this.type.pics[2];
+            else if (this.health < 1) this.pic = this.type.pics[3];
+            else this.pic = pic[this.type.pics.length];
                    
             setReadouts();
             
@@ -196,6 +221,14 @@ function setReadouts() {
     document.getElementById("bored-readout").textContent = `Bored: ${myPet.mood.bored}`;
     document.getElementById("tired-readout").textContent = `Tired: ${myPet.mood.tired}`;
     document.getElementById("angry-readout").textContent = `Angry: ${myPet.mood.angry}`;
+
+    // Also print out 'bite messge' and 'health message'
+
+    // Also print out 'score'
+
+    // Also set the current display picture from 'this.pic'
+    document.getElementById("pet-image").src = myPet.pic;
+
 }
 
 
@@ -206,59 +239,82 @@ game.style.display = "none"
 ///////// hiding name-input, game space ///////////////
 
 ////////// animal selection from choosePet.html START ///////////
-// This gets run when the script first gets loaded
+
+// This gets run when the script first gets loaded, for debugging
 let animalSelect = bunny;
-
-const dogSelect = document.getElementById("select-dog");
-dogSelect.addEventListener("click", () => {
-    animalSelect = dog;
-    //console.log(animalSelect);
-    choosePetGrid.style.display = "none";
-    choosePetTitle.style.display = "none";
-    giveNameHeader.style.display = ""
-    nameInputter.style.display = ""
-})
-   
-const catSelect = document.getElementById("select-cat");
-catSelect.addEventListener("click", () => {
-    animalSelect = cat;
-    //console.log(animalSelect);
-    choosePetGrid.style.display = "none";
-    choosePetTitle.style.display = "none";
-    giveNameHeader.style.display = ""
-    nameInputter.style.display = ""
-})
-
-const bunnySelect = document.getElementById("select-bunny");
-bunnySelect.addEventListener("click", () => {
-    animalSelect = bunny;
-    //console.log(animalSelect);
-    choosePetGrid.style.display = "none";
-    choosePetTitle.style.display = "none";
-    giveNameHeader.style.display = ""
-    nameInputter.style.display = ""
-})
-
-const crocSelect = document.getElementById("select-croc");
-crocSelect.addEventListener("click", () => {
-    animalSelect = croc;
-    //console.log(animalSelect);
-    choosePetGrid.style.display = "none";
-    choosePetTitle.style.display = "none";
-    giveNameHeader.style.display = ""
-    nameInputter.style.display = ""
-})
-////////// animal selection from choosePet.html END ///////////
-
-
-////////// naming of pet START ///////////
-const input = document.getElementById("input");
-const submit = document.getElementById("submit");
 
 // These get run when the script first gets loaded
 // Good for debugging!
 let petName = "Placeholder";
 let myPet = new Cyberpet(petName,animalSelect);
+
+
+function doGameSetup() {
+    choosePetGrid.style.display = "none";
+    choosePetTitle.style.display = "none";
+    giveNameHeader.style.display = "";
+    nameInputter.style.display = "";
+    myPet.pic = myPet.type.pics[0];
+
+    // Set the pet image here for the first time
+    document.getElementById("pet-image").src = myPet.pic;
+}
+
+const dogSelect = document.getElementById("select-dog");
+dogSelect.addEventListener("click", () => {
+    animalSelect = dog;
+    doGameSetup();
+    console.log(`You have selected a ${animalSelect.species}`);
+
+//     choosePetGrid.style.display = "none";
+//     choosePetTitle.style.display = "none";
+//     giveNameHeader.style.display = ""
+//     nameInputter.style.display = ""
+})
+   
+const catSelect = document.getElementById("select-cat");
+catSelect.addEventListener("click", () => {
+    animalSelect = cat;
+    doGameSetup();
+    console.log(`You have selected a ${animalSelect.species}`);
+
+//     choosePetGrid.style.display = "none";
+//     choosePetTitle.style.display = "none";
+//     giveNameHeader.style.display = ""
+//     nameInputter.style.display = ""
+})
+
+const bunnySelect = document.getElementById("select-bunny");
+bunnySelect.addEventListener("click", () => {
+    animalSelect = bunny;
+    doGameSetup();
+    console.log(`You have selected a ${animalSelect.species}`);
+    
+//     choosePetGrid.style.display = "none";
+//     choosePetTitle.style.display = "none";
+//     giveNameHeader.style.display = ""
+//     nameInputter.style.display = ""
+})
+
+const crocSelect = document.getElementById("select-croc");
+crocSelect.addEventListener("click", () => {
+    animalSelect = croc;
+    doGameSetup();
+    console.log(`You have selected a ${animalSelect.species}`);
+    
+//     choosePetGrid.style.display = "none";
+//     choosePetTitle.style.display = "none";
+//     giveNameHeader.style.display = ""
+//     nameInputter.style.display = ""
+})
+////////// animal selection from choosePet.html END ///////////
+
+//console.log(`You have selected a ${animalSelect}`);
+
+////////// naming of pet START ///////////
+const input = document.getElementById("input");
+const submit = document.getElementById("submit");
+
 
 const petNamer = () => {
     petName = input.value;
@@ -270,6 +326,9 @@ submit.addEventListener("click", () => {
     //console.log(`The pets name is ${petName}`);
     myPet.name = petName;
     myPet.type = animalSelect;
+    myPet.pic = myPet.type.pics[0];
+    document.getElementById("pet-image").src = myPet.pic;
+
     // = new Cyberpet(petName, animalSelect);
     //console.log(animalSelect);
     //console.log(myPet);    
@@ -290,7 +349,7 @@ feedClick.addEventListener("mousedown", () => {
     //console.log("feed test");
 });
 feedClick.addEventListener("mouseup", () => {
-    document.getElementById("pet-image").src = "pics/dog-happy_q50.webp"
+    document.getElementById("pet-image").src = myPet.pic; //"pics/dog-happy_q50.webp"
     //console.log("feed test");
 });
 
@@ -301,7 +360,7 @@ cleanClick.addEventListener("mousedown", () => {
     //console.log("clean test");
 });
 cleanClick.addEventListener("mouseup", () => {
-    document.getElementById("pet-image").src = "pics/dog-happy_q50.webp"
+    document.getElementById("pet-image").src = myPet.pic; //"pics/dog-happy_q50.webp"
     //console.log("clean test");
 });
 
@@ -313,7 +372,7 @@ playClick.addEventListener("mousedown", () => {
     //console.log("play test");
 });
 playClick.addEventListener("mouseup", () => {
-    document.getElementById("pet-image").src = "pics/dog-happy_q50.webp"
+    document.getElementById("pet-image").src = myPet.pic; //"pics/dog-happy_q50.webp"
     //console.log("play test");
 });
 ////////// click event for feed/clean/play END///////////////////
