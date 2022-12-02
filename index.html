@@ -14,28 +14,28 @@
 <body>
 <header>-CYBERPET-</header>
 
-<div id="choosePetTitle"><h1>CHOOSE YOUR PET</h1></div>
+<div id="choosePetTitle"><h1>CHOOSE YOUR PET</h1></div>==
 
 <div id ="choosePetGrid">
     <div class="choose-cat">
         <button id="select-cat"><img src="pics/funny-jumping-cats-51_q50.jpg" /></button>
         <h2>CAT</h2>
-        <p class="description">description of cat</p>
+        <p class="description">Cats are fun and playful animals but can sometimes be challenging to handle.</p>
     </div>
     <div class="choose-dog">
         <button id="select-dog"><img src="pics/dog-is-baffled.jpg" /></button>
         <h2>DOG</h2>
-        <p class="description">description of dog</p>
+        <p class="description">Quintissentially loyal, a dog is widely reknowned as being "Man's best friend".</p>
     </div>
     <div class="choose-bunny">
         <button id="select-bunny"><img src="pics/8-bit-bunny.jpg" /></button>
         <h2>BUNNY</h2>
-        <p class="description">description of bunny</p>
+        <p class="description">Cute, fluffy and loveable, a woodland bunny is sure to never cause you any distress.</p>
     </div>
     <div class="choose-croc">
         <button id="select-croc"><img src="pics/wiki-croc-head-1600px.jpg" /></button>
         <h2>CROCODILE</h2>
-        <p class="description">description of crocodile</p>
+        <p class="description">Wiley, slovenly and eternally hungry, a crocodile spends its time lurking in the water, waiting for something to feed on!</p>
     </div>
 </div>
 
@@ -49,16 +49,24 @@
 <div id="game">
     <div id = "pet-container">
         <div id = "pet-display-img"><img id="pet-image" src="pics/dog-happy_q50.webp"></div>
-        <div id="health-icons">
-            <div id="hungry-readout">hungry: 50</div>
-            <div id="clean-readout">dirty: 50</div>
-            <div id="bored-readout">bored: 50</div>
-            <div id="tired-readout">tired: 50</div>
-            <div id="angry-readout">angry: 50</div>
-        </div>
     </div>
-
     <div class = "healthbar"></div>
+    
+    <div id="bite-msg">Bite message goes here</div>
+    
+    <div id="health-msg">Health message goes here</div>
+
+    <div id="health-icons">
+        <div id="hungry-readout">hungry: 50</div>
+        <div> &nbsp;&nbsp; </div>
+        <div id="clean-readout">dirty: 50</div>
+        <div> &nbsp;&nbsp; </div>
+        <div id="bored-readout">bored: 50</div>
+        <div> &nbsp;&nbsp; </div>
+        <div id="tired-readout">tired: 50</div>
+        <div> &nbsp;&nbsp; </div>
+        <div id="angry-readout">angry: 50</div>
+    </div>
 
     <div id = "button-container" class="clickyButton">
         <button id="feedClick">FEED</button>
