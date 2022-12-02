@@ -222,7 +222,7 @@ class Cyberpet {
 //     } else {
 //         this.petImage = petImages[petImages.length];
 //     }
-// }
+}
 
 /*  COPIED HERE FROM .HTML FILE FOR REFERENCE:
             <div id="hungry-readout">hungry: 50</div>
