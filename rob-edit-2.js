@@ -1,14 +1,18 @@
 // Define images for each type of pet
 let crocImages = ["pics/croc-happy.jpg","pics/croc-unhappy.jpg","pics/croc-lastlegs.jpg","pics/croc-dead.jpg"];
+let crocExtra = ["pics/feeding-croc_800px.jpg","pics/bathing-croc_800px.jpg","pics/playing-croc_800px.jpg"];
 let bunnyImages = ["pics/bunny-happy.jpg","pics/bunny-unhappy.jpg","pics/bunny-lastlegs.jpg","pics/bunny-dead.jpg"];
+let bunnyExtra = ["pics/feeding-bunny_1600px.jpg","pics/bathing-bunny_1600px.jpg","pics/playing-bunny_1600px.jpg"];
 let dogImages = ["pics/dog-happy.jpg","pics/dog-unhappy.jpg","pics/dog-lastlegs.jpg","pics/dog-dead.jpg"];
+let dogExtra = ["pics/feeding-dog_1600px.jpg","pics/bathing-dog_1600px.jpg","pics/playing-dog_1600px.jpg"];
 let catImages = ["pics/cat-happy.jpg","pics/cat-unhappy.jpg","pics/cat-lastlegs.jpg","pics/cat-dead.jpg"];
+let catExtra = ["pics/feeding-cat_1600px.jpg","pics/bathing-cat_1600px.jpg","pics/playing-cat_1600px.jpg"];
 
 //console.log(dogImages);
 
 // Class for defining the type of pet, with a characteristic temperament
 class PetType {
-    constructor (species, affectionate, irritable, lazy, scruffy, greedy, images) {
+    constructor (species, affectionate, irritable, lazy, scruffy, greedy, images, imgExtra) {
         //console.log(`Constructing a ${species}`);
         
         // This is a string
@@ -22,19 +26,20 @@ class PetType {
         this.greedy = greedy;
         // An array of images, reflecting four different moods
         this.pics = images;
+        this.picsExtra = imgExtra; // Feeding, cleaning, playing => indexes 1, 2, and 3
     }
 }
 
 //console.log("Defined constructor for PetType");
 
 // Define some types of pets, complete with temperaments, as global variables.
-let croc = new PetType("crocodile", 1,10,7,5,8, crocImages);
+let croc = new PetType("crocodile", 1,10,7,5,8, crocImages, crocExtra);
 //console.log("Defined croc");
-let bunny = new PetType("woodland bunny", 10,1,2,8,10, bunnyImages);
+let bunny = new PetType("woodland bunny", 10,1,2,8,10, bunnyImages, bunnyExtra);
 //console.log("Defined bunny");
-let dog = new PetType("dog", 8,3,2,9,7, dogImages);
+let dog = new PetType("dog", 8,3,2,9,7, dogImages, dogExtra);
 //console.log("Defined dog");
-let cat = new PetType("cat", 6,8,8,2,8, catImages);
+let cat = new PetType("cat", 6,8,8,2,8, catImages, catExtra);
 //console.log("Defined cat");
 
 //console.log("Defined some pet types");
@@ -79,10 +84,7 @@ class Cyberpet {
     
     }
 
-    //
-    // GETTERS AND SETTERS
-    // use this.score to reference Cyberpet.scorevar
-    //
+    // GETTERS AND SETTERS - use this.score to reference Cyberpet.scorevar
     get score() {
         // Do funky stuff here
         return this.scorevar;
@@ -92,9 +94,7 @@ class Cyberpet {
         this.scorevar = tmpvar;
     }
     
-    //
     // ACTION FUNCTIONS:
-    //
 
     //changes feed false to true, adds 10 health-capped at 100
     feedPet () {
@@ -106,11 +106,15 @@ class Cyberpet {
         this.mood.angry = this.mood.hungry + this.mood.bored + this.mood.tired + this.mood.dirty;
         this.mood.angry *= Math.floor(this.type.irritable/3)+1;
 
+        document.getElementById("bite-msg").textContent = ""
+        
         this.health += 10 - Math.floor(this.mood.tired / 10);
         if (this.health > 100) {
             this.health -= 20;
+            document.getElementById("health-msg").textContent = `${this.name} is being overfed and getting overweight!`;
             console.log(`${this.name} is being overfed and getting overweight!`);
-        }
+        } else document.getElementById("health-msg").textContent = ""
+
 
         setReadouts();
 
@@ -127,15 +131,17 @@ class Cyberpet {
 
         if (this.mood.angry > 500) {
             this.score -=100;
+            document.getElementById("bite-msg").textContent = `Ouch! ${this.name} the ${this.type.species} just bit you! Maybe you should feed him?`
             console.log(`Ouch! ${this.name} the ${this.type.species} just bit you!`);
             console.log(`Maybe you should feed him?`);
-        }
+        } else document.getElementById("bite-msg").textContent = ""
 
         this.health += 10 - Math.floor(this.mood.tired / 10);
         if (this.health > 100) { 
             this.health = 100;
+            document.getElementById("health-msg").textContent = `${this.name} is now really, really clean, and in perfect health!`
             console.log(`${this.name} is now really, really clean, and in perfect health!`);
-        }
+        } else document.getElementById("health-msg").textContent = ""
 
         setReadouts();
         
@@ -152,23 +158,23 @@ class Cyberpet {
 
         if (this.mood.angry > 500 && this.mood.tired > 70) {
             this.score -= 100;
+            document.getElementById("bite-msg").textContent = `Ouch! ${this.name} the ${this.type.species} just bit you! Maybe you should feed him?`
             console.log(`Ouch! ${this.name} the ${this.type.species} just bit you!`);
             console.log(`Maybe play with him later?`);
-        }
+        } else document.getElementById("bite-msg").textContent = ""
 
         this.health += 10 - Math.floor(this.mood.tired / 10);
-        if (this.health > 100) { 
+        if (this.health >= 100) { 
             this.health = 100;
+            document.getElementById("health-msg").textContent = `${this.name} is so healthy he doen't really need any more play, but what the heck.`
             console.log(`${this.name} is so healthy he doen't really need any more play, but what the heck.`)
-        }
+        } else document.getElementById("health-msg").textContent = ""
 
         setReadouts();
        
     }
 
-    //
     // TIMER FUNCTIONS:
-    //
     tick() {
         // Gets called regularly by a timer and modifies this.health.
         console.log("Ticking...");
@@ -202,7 +208,7 @@ class Cyberpet {
     
     //this.tick();
 
-}
+} // end of class Cyberpet
 
 
 /*  COPIED HERE FROM .HTML FILE FOR REFERENCE:
@@ -240,11 +246,8 @@ game.style.display = "none"
 
 ////////// animal selection from choosePet.html START ///////////
 
-// This gets run when the script first gets loaded, for debugging
+// These gets run when the script first gets loaded, for debugging
 let animalSelect = bunny;
-
-// These get run when the script first gets loaded
-// Good for debugging!
 let petName = "Placeholder";
 let myPet = new Cyberpet(petName,animalSelect);
 
@@ -345,7 +348,7 @@ submit.addEventListener("click", () => {
 const feedClick = document.getElementById("feedClick");
 feedClick.addEventListener("mousedown", () => {
     myPet.feedPet();
-    document.getElementById("pet-image").src = "pics/dog-pieces_q50.webp"
+    document.getElementById("pet-image").src = myPet.type.picsExtra[0];
     //console.log("feed test");
 });
 feedClick.addEventListener("mouseup", () => {
@@ -356,7 +359,7 @@ feedClick.addEventListener("mouseup", () => {
 const cleanClick = document.getElementById("cleanClick");
 cleanClick.addEventListener("mousedown", () => {
     myPet.cleanPet();
-    document.getElementById("pet-image").src = "pics/dog-van-goch_q50.webp"
+    document.getElementById("pet-image").src = myPet.type.picsExtra[1];
     //console.log("clean test");
 });
 cleanClick.addEventListener("mouseup", () => {
@@ -368,7 +371,7 @@ cleanClick.addEventListener("mouseup", () => {
 const playClick = document.getElementById("playClick");
 playClick.addEventListener("mousedown", () => {
     myPet.playWithPet();
-    document.getElementById("pet-image").src = "pics/dog-unwell_q50.webp"
+    document.getElementById("pet-image").src = myPet.type.picsExtra[2];
     //console.log("play test");
 });
 playClick.addEventListener("mouseup", () => {
