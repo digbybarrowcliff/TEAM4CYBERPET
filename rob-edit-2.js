@@ -142,35 +142,35 @@ class Cyberpet {
     }
 
     //
-    // TIMER FUNCTIONS:
-    //
-    tick() {
-        // Gets called regularly by a timer and modifies this.health.
-        console.log("Ticking...");
+    // // TIMER FUNCTIONS:
+    // //
+    // tick() {
+    //     // Gets called regularly by a timer and modifies this.health.
+    //     console.log("Ticking...");
 
-        // Adapted from Digby's code
-        setTimeout(() => {
-            console.log("Running tick handler...");
+    //     // Adapted from Digby's code
+    //     setTimeout(() => {
+    //         console.log("Running tick handler...");
 
-            this.mood.hungry += 10;
-            this.mood.dirty += 10;
-            this.mood.bored += 10;
-            this.mood.tired += 10;
-            this.mood.angry += 10;
+    //         this.mood.hungry += 10;
+    //         this.mood.dirty += 10;
+    //         this.mood.bored += 10;
+    //         this.mood.tired += 10;
+    //         this.mood.angry += 10;
             
-            this.health -=10;
-            this.score += this.health;
+    //         this.health -=10;
+    //         this.score += this.health;
             
-            if (this.health < 80) this.petImage = petImages[0];
-            else if (this.health < 50) this.petImage = petImages[1];
-            else if (this.health < 15) this.petImage = petImages[2];
-            else if (this.health < 1) this.petImage = petImages[3];
-            else this.petImage = petImages[petImages.length];
+    //         if (this.health < 80) this.petImage = petImages[0];
+    //         else if (this.health < 50) this.petImage = petImages[1];
+    //         else if (this.health < 15) this.petImage = petImages[2];
+    //         else if (this.health < 1) this.petImage = petImages[3];
+    //         else this.petImage = petImages[petImages.length];
                    
-            setReadouts();
+    //         setReadouts();
             
-            }, 5000);
-    }
+    //         }, 5000);
+    // }
 
     // Still not sure what to do here. Need to call the function somewhere.
     // Not from the terminal though, since need 'window' to be defined.
@@ -178,7 +178,32 @@ class Cyberpet {
     //this.tick();
 
 }
+const timingFunction = () => {
+    window.setTimeout(() => {
+    this.hungry += 10;
+    this.dirty += 10;
+    this.bored += 10;
+    this.tired += 10;
+    this.angry += 10;
+    this.health -=10;
+    timingFunction();
+    }, 1000);
+}
+timingFunction();
 
+function checkCondition () {
+    if (this.health < 80) {
+        this.petImage = petImages[0];
+    } else if (this.health < 50) {
+        this.petImage = petImages[1];
+    } else if (this.health < 15) {
+        this.petImage = petImages[2];
+    } else if (this.health < 1) {
+        this.petImage = petImages[3];
+    } else {
+        this.petImage = petImages[petImages.length];
+    }
+}
 
 /*  COPIED HERE FROM .HTML FILE FOR REFERENCE:
             <div id="hungry-readout">hungry: 50</div>
