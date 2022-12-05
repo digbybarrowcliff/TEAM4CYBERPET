@@ -98,6 +98,7 @@ class Cyberpet {
 
     //changes feed false to true, adds 10 health-capped at 100
     feedPet () {
+        
         //this.feed = true;
         this.mood.hungry -= 2 * this.type.greedy;
         this.mood.tired -= 2 * this.type.lazy;
@@ -130,7 +131,7 @@ class Cyberpet {
         this.mood.angry *= Math.floor(this.type.irritable/3)+1;
 
         if (this.mood.angry > 500) {
-            this.score -=100;
+            this.score -= 100;
             document.getElementById("bite-msg").textContent = `Ouch! ${this.name} the ${this.type.species} just bit you! Maybe you should feed him?`
             console.log(`Ouch! ${this.name} the ${this.type.species} just bit you!`);
             console.log(`Maybe you should feed him?`);
@@ -231,7 +232,13 @@ class Cyberpet {
             <div id="tired-readout">tired: 50</div>
             <div id="angry-readout">angry: 50</div>
 */
-
+function checkCondition () {
+    if (Mood.angry >= 100)
+    Mood.angry = 100;
+    if (Mood.angry = 0)
+    Mood.angry = 0;
+}
+checkCondition ();
 
 function setReadouts() {
     //console.log("Setting Readouts");
@@ -363,10 +370,12 @@ feedClick.addEventListener("mousedown", () => {
     myPet.feedPet();
     document.getElementById("pet-image").src = myPet.type.picsExtra[0];
     //console.log("feed test");
+    checkCondition ();
 });
 feedClick.addEventListener("mouseup", () => {
     document.getElementById("pet-image").src = myPet.pic; //"pics/dog-happy_q50.webp"
     //console.log("feed test");
+    checkCondition ();
 });
 
 const cleanClick = document.getElementById("cleanClick");
@@ -374,10 +383,12 @@ cleanClick.addEventListener("mousedown", () => {
     myPet.cleanPet();
     document.getElementById("pet-image").src = myPet.type.picsExtra[1];
     //console.log("clean test");
+    checkCondition ();
 });
 cleanClick.addEventListener("mouseup", () => {
     document.getElementById("pet-image").src = myPet.pic; //"pics/dog-happy_q50.webp"
     //console.log("clean test");
+    checkCondition ();
 });
 
 
@@ -386,9 +397,11 @@ playClick.addEventListener("mousedown", () => {
     myPet.playWithPet();
     document.getElementById("pet-image").src = myPet.type.picsExtra[2];
     //console.log("play test");
+    checkCondition ();
 });
 playClick.addEventListener("mouseup", () => {
     document.getElementById("pet-image").src = myPet.pic; //"pics/dog-happy_q50.webp"
     //console.log("play test");
+    checkCondition ();
 });
 ////////// click event for feed/clean/play END///////////////////
